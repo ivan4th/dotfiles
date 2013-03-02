@@ -1,0 +1,8 @@
+(("Default" 2 T T :CLASS "Gnome-terminal" :INSTANCE "gnome-terminal" :TITLE NIL
+  :ROLE "gnome-terminal-window-6745-1471110385-1294760867")
+ ("Default" 4 T T :CLASS "stalonetray" :INSTANCE "stalonetray" :TITLE NIL :ROLE
+  NIL)
+ ("Default" 3 T T :CLASS "Conky" :INSTANCE "Conky" :TITLE NIL :ROLE NIL)
+ ("Default" 0 T T :CLASS "Conkeror" :INSTANCE "Navigator" :TITLE NIL :ROLE
+  "browser")
+ ("Default" 1 T T :CLASS "Emacs" :INSTANCE "emacs" :TITLE NIL :ROLE NIL))

@@ -1,0 +1,9 @@
+;; -*-lisp-*-
+
+(in-package :stumpwm)
+
+(setf *default-layout-screen-width* 3200
+      *default-layout-screen-height* 1200)
+
+#+nil(setf *firefox-executable* "~/firefox32/firefox -P devnew -no-remote")
+(setf *firefox-executable* "/home/ivan4th/progs/firefox/firefox -P ff4")
