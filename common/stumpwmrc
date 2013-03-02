@@ -54,9 +54,10 @@
   emacs conkeror assistant vmware
   (firefox "Firefox" *firefox-executable*)
   (gnome-terminal "Gnome-terminal")
-  (terminator "Terminator")
   (stalonetray "stalonetray")
-  (google-chrome "Google-chrome"))
+  (google-chrome "Google-chrome")
+  (open-office "LibreOffice.org 3.2" "libreoffice")
+  (evince "Evince" "evince"))
 
 (defcommand sselect (to-screen) ((:number "Select Screen: "))
   "Select screen."
@@ -197,22 +198,24 @@
 #+nil(define-key *k-map* (kbd "s-p") "pull-hidden-prev")
 (define-key *top-map* (kbd "s-c") "remove")
 (define-key *top-map* (kbd "s-r") "iresize")
-(define-key *top-map* (kbd "F2") "exec terminator")
+(define-key *top-map* (kbd "F2") "exec gnome-terminal --hide-menubar")
 (define-key *top-map* (kbd "s-RET") "fullscreen")
 
 (define-key *k-map* (kbd "s-c") "p-conkeror")
-(define-key *k-map* (kbd "s-g") "p-terminator")
+(define-key *k-map* (kbd "s-g") "p-gnome-terminal")
 (define-key *k-map* (kbd "s-e") "p-emacs")
 (define-key *k-map* (kbd "s-f") "p-firefox")
 (define-key *k-map* (kbd "s-h") "p-google-chrome")
 (define-key *k-map* (kbd "s-t") "p-stalonetray")
 (define-key *k-map* (kbd "s-/") "p-assistant")
 (define-key *k-map* (kbd "s-v") "p-vmware")
+(define-key *k-map* (kbd "s-i") "p-open-office")
+(define-key *k-map* (kbd "s-m") "p-evince")
 
 (define-key *k-map* (kbd "c") "conkeror")
-(define-key *k-map* (kbd "g") "terminator")
-(define-key *top-map* (kbd "s-q") "terminator")
-(define-key *top-map* (kbd "s-\\") "terminator")
+(define-key *k-map* (kbd "g") "gnome-terminal")
+(define-key *top-map* (kbd "s-q") "gnome-terminal")
+(define-key *top-map* (kbd "s-\\") "gnome-terminal")
 (define-key *k-map* (kbd "e") "emacs")
 (define-key *top-map* (kbd "s-e") "emacs")
 (define-key *k-map* (kbd "f") "firefox")
@@ -223,6 +226,12 @@
 (define-key *top-map* (kbd "s-/") "assistant")
 (define-key *k-map* (kbd "v") "vmware")
 (define-key *top-map* (kbd "s-v") "vmware")
+
+(define-key *top-map* (kbd "s-i") "open-office")
+(define-key *k-map* (kbd "i") "open-office")
+
+(define-key *top-map* (kbd "s-m") "evince")
+(define-key *k-map* (kbd "m") "evince")
 
 (define-key *top-map* (kbd "s-g") "google")
 #+nil(define-key *top-map* (kbd "s-F4") "delete")
@@ -255,10 +264,9 @@
   (layout-base))
 
 ;; start some programs
-#+nil
 (mapc #'run-shell-command
       '("stalonetray --window-type normal"
         "conky"
-        "gnome-terminal -e screen&"
-        "conkeror"
+        "gnome-terminal --hide-menubar -e screen&"
+        ;; "conkeror"
         "emacs"))

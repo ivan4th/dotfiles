@@ -1,0 +1,6 @@
+;; -*-lisp-*-
+
+(in-package :stumpwm)
+
+(setf *default-layout-screen-width* 3120)
+(setf *default-layout-screen-height* 1050)

@@ -1,0 +1,10 @@
+defscrollback 10000
+termcapinfo xterm|xterms|xs|rxvt ti@:te@
+startup_message off
+hardstatus alwayslastline
+hardstatus string '%{= kK}%-Lw%{= KW}%50>%n%f* %t%{= kK}%+Lw%< %{= kG}%-=%D %d %M %Y %c%{-}'
+# screen -t server 0 /home/ivan4th/work/cms/run-server.sh
+# screen -t swank-js 1 /home/ivan4th/bin/run-swank-js.sh
+# screen -t ipython 3 ipython
+screen -t htop 0 htop
+screen -t bash 1
