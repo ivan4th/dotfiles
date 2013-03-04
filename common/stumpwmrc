@@ -12,6 +12,7 @@
 (set-prefix-key (kbd "C-'"))
 
 (setf *mode-line-position* :bottom)
+(defvar *on-layout-base* '())
 
 (setf *honor-window-moves* nil) ;; don't allow Conky jump like mad
 
@@ -81,13 +82,13 @@
          (if new-heads
              (progn
                (scale-screen screen new-heads)
-               (mapc 'group-add-head (screen-groups screen))
+               (mapc 'group-sync-all-heads (screen-groups screen))
                (update-mode-lines screen))
              (dformat 1 "Invalid configuration! ~S~%" new-heads)))))))
 
 (defcommand swank () ()
   "Start SWANK"
-  (let ((port (swank:create-server :coding-system "utf-8" :dont-close t)))
+  (let ((port (swank:create-server :dont-close t)))
     (message "SWANK STARTED @ PORT ~s" port)))
 
 (defmacro make-web-jump (name prefix)
@@ -147,6 +148,7 @@
 
 (defcommand layout-base () ()
   "Arrange windows according to the default desktop placement"
+  (update-heads)
   (let ((desktop-file (home-file ".stumpwm-desktop-base"))
         (window-file (home-file ".stumpwm-windows-base")))
     (cond ((not (probe-file desktop-file))
@@ -156,7 +158,9 @@
           (t
            (restore-from-file desktop-file)
            (restore-window-placement-rules window-file)
-           (place-existing-windows)))))
+           (place-existing-windows)
+           (dolist (func *on-layout-base*)
+             (funcall func))))))
 
 ;; key bindings
 
@@ -263,10 +267,14 @@
            (= *default-layout-screen-height* (screen-height (first *screen-list*))))
   (layout-base))
 
+(load-module "stumptray")
+(stumptray::stumptray)
+
 ;; start some programs
 (mapc #'run-shell-command
-      '("stalonetray --window-type normal"
+      '(;; "stalonetray --window-type normal"
         "conky"
         "gnome-terminal --hide-menubar -e screen&"
         ;; "conkeror"
         "emacs"))
+

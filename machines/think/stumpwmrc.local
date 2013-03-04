@@ -4,3 +4,13 @@
 
 (setf *default-layout-screen-width* 3120)
 (setf *default-layout-screen-height* 1050)
+
+(defcommand fixkb () ()
+  "Fix keyboard settings (damn Ubuntu)"
+  (run-shell-command "DISPLAY=:0 setxkbmap -option ctrl:nocaps -option grp:menu_toggle -option grp:rwin_toggle"))
+(pushnew 'fixkb *on-layout-base*)
+(fixkb)
+
+(load-module "battery")
+(setf stumpwm:*screen-mode-line-format*
+      (list "%b [^B%n^b]  " '(:eval (format-datetime)) " | %W"))
