@@ -271,10 +271,10 @@
 (stumptray::stumptray)
 
 ;; start some programs
+#++
 (mapc #'run-shell-command
       '(;; "stalonetray --window-type normal"
         "conky"
         "gnome-terminal --hide-menubar -e screen&"
         ;; "conkeror"
         "emacs"))
-
