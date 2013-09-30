@@ -11,6 +11,9 @@
 (pushnew 'fixkb *on-layout-base*)
 (fixkb)
 
-(load-module "battery")
+;; (load-module "battery")
+;; (setf stumpwm:*screen-mode-line-format*
+;;      (list "%b [^B%n^b]  " '(:eval (format-datetime)) " | %W"))
+(load-module "battery-portable")
 (setf stumpwm:*screen-mode-line-format*
-      (list "%b [^B%n^b]  " '(:eval (format-datetime)) " | %W"))
+     (list "[^B%n^b] " '(:eval (format-datetime)) " | %B | %W"))
