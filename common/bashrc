@@ -95,6 +95,31 @@ sshreagent () {
     echo Cannot find ssh agent - maybe you should reconnect and forward it?
 }
 
+umedia () {
+    grep /media/ /etc/mtab|cut -d' ' -f1|xargs umount
+}
+
+shu () {
+  ~/progs/sshuttle/sshuttle -v --dns -r w 192.168.1.0/24 192.168.1.100/24
+}
+
+pickl () {
+  if [ -z "$1" ]; then
+    echo "must specify lesson name" 1>&2
+    return 1
+  fi
+  if ! echo "$1" | grep -q ':'; then
+    name="lesson:$1"
+  else
+    name="$1"
+  fi
+  # rm anything after a slash
+  name="$(echo -n "$name"|sed 's@/.*@@')"
+  # TBD: specify course name
+  cmscli --pull ssh://os --pluck="$name" &&
+  cmscli -v --add-lessons-to=zarniwoop_test_course --exact-name="$name"
+}
+
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
 export PS1='\[\033[1;95m\]${debian_chroot:+($debian_chroot)}\u@\h\[\e[0m\]:\[\e[1;32m\]\w\[\033[0;33m\]$(__git_ps1 " (%s) ")\[\e[0m\]\$ '
