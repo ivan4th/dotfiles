@@ -52,13 +52,15 @@
 (defvar *firefox-executable* "firefox")
 
 (define-pull-raise-pairs
-  emacs conkeror assistant vmware
+  emacs conkeror assistant
+  (virtualbox "VirtualBox")
   (firefox "Firefox" *firefox-executable*)
   (gnome-terminal "Gnome-terminal")
   (stalonetray "stalonetray")
   (google-chrome "Google-chrome")
   (open-office "LibreOffice.org 3.2" "libreoffice")
-  (evince "Evince" "evince"))
+  (evince "Evince" "evince")
+  (dscope-hmi "Argv0dummy" "dscope-hmi"))
 
 (defcommand sselect (to-screen) ((:number "Select Screen: "))
   "Select screen."
@@ -212,9 +214,9 @@
 (define-key *k-map* (kbd "s-h") "p-google-chrome")
 (define-key *k-map* (kbd "s-t") "p-stalonetray")
 (define-key *k-map* (kbd "s-/") "p-assistant")
-(define-key *k-map* (kbd "s-v") "p-vmware")
+(define-key *k-map* (kbd "s-v") "p-virtualbox")
 (define-key *k-map* (kbd "s-i") "p-open-office")
-(define-key *k-map* (kbd "s-m") "p-evince")
+(define-key *k-map* (kbd "s-m") "p-dscope-hmi")
 
 (define-key *k-map* (kbd "c") "conkeror")
 (define-key *k-map* (kbd "g") "gnome-terminal")
@@ -228,14 +230,14 @@
 (define-key *top-map* (kbd "s-h") "google-chrome")
 (define-key *k-map* (kbd "t") "stalonetray")
 (define-key *top-map* (kbd "s-/") "assistant")
-(define-key *k-map* (kbd "v") "vmware")
-(define-key *top-map* (kbd "s-v") "vmware")
+(define-key *k-map* (kbd "v") "virtualbox")
+(define-key *top-map* (kbd "s-v") "virtualbox")
 
 (define-key *top-map* (kbd "s-i") "open-office")
 (define-key *k-map* (kbd "i") "open-office")
 
-(define-key *top-map* (kbd "s-m") "evince")
-(define-key *k-map* (kbd "m") "evince")
+(define-key *top-map* (kbd "s-m") "dscope-hmi")
+(define-key *k-map* (kbd "m") "dscope-hmi")
 
 (define-key *top-map* (kbd "s-g") "google")
 #+nil(define-key *top-map* (kbd "s-F4") "delete")
