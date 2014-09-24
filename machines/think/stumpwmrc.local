@@ -7,7 +7,7 @@
 
 (defcommand fixkb () ()
   "Fix keyboard settings (damn Ubuntu)"
-  (run-shell-command "DISPLAY=:0 setxkbmap -option ctrl:nocaps -option grp:menu_toggle -option grp:rwin_toggle"))
+  (run-shell-command "DISPLAY=:0 setxkbmap -layout us,ru -option '' -option grp:rwin_toggle,grp:toggle,grp_led:scroll,terminate:ctrl_alt_bksp,ctrl:nocaps"))
 (pushnew 'fixkb *on-layout-base*)
 (fixkb)
 
@@ -17,3 +17,4 @@
 (load-module "battery-portable")
 (setf stumpwm:*screen-mode-line-format*
      (list "[^B%n^b] " '(:eval (format-datetime)) " | %B | %W"))
+
