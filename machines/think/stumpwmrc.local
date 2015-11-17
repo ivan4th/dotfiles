@@ -18,3 +18,5 @@
 (setf stumpwm:*screen-mode-line-format*
      (list "[^B%n^b] " '(:eval (format-datetime)) " | %B | %W"))
 
+(run-shell-command "dbus-send --session --dest=org.gnome.SessionManager \"/org/gnome/SessionManager\" org.gnome.SessionManager.RegisterClient \"string:stumpwm.desktop\" \"string:1\"")
+
