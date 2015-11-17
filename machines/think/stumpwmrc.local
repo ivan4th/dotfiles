@@ -20,3 +20,4 @@
 
 (run-shell-command "dbus-send --session --dest=org.gnome.SessionManager \"/org/gnome/SessionManager\" org.gnome.SessionManager.RegisterClient \"string:stumpwm.desktop\" \"string:1\"")
 
+(run-shell-command "dbus-launch nm-applet&")
