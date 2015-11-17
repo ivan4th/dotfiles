@@ -124,3 +124,36 @@ export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
 export PS1='\[\033[1;95m\]${debian_chroot:+($debian_chroot)}\u@\h\[\e[0m\]:\[\e[1;32m\]\w\[\033[0;33m\]$(__git_ps1 " (%s) ")\[\e[0m\]\$ '
 export PYTHONPATH="$HOME/work/cms"
+
+[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
+gvm use go1.5 >& /dev/null
+export GOPATH="$HOME/go:$GOPATH"
+export PATH="$PATH:$GOPATH/bin"
+
+# http://code-and-hacks.peculier.com/articles/setting-terminal-title-in-gnu-screen/
+function settitle () {
+    if [ -n "$STY" ] ; then
+        # We are in a screen session
+        # echo "Setting screen titles to $@"
+        printf "\033k%s\033\\" "$@"
+        # screen -X eval "at \\# title $@" "shelltitle $@"
+    else
+        printf "\033]0;%s\007" "$@"
+    fi
+}
+
+alias n='settitle b'
+
+# rebuild ssh config
+ussh () {
+    (echo "# GENERATED FILE!!!!! DO NOT EDIT!!!!!"; cat ~/.ssh/config.d/*) >~/.ssh/config
+}
+
+ussh
+
+grep '^ *Host .*#CMD' ~/.ssh/config |
+    sed 's/^Host *\| *#.*//g' |
+    while read h; do
+        echo "alias $h='settitle $h; ssh $h'"
+    done >~/.ssh/aliases
+. ~/.ssh/aliases
