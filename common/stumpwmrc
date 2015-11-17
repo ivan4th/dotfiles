@@ -57,7 +57,7 @@
   (firefox "Firefox" *firefox-executable*)
   (gnome-terminal "Gnome-terminal")
   (stalonetray "stalonetray")
-  (google-chrome "Google-chrome")
+  (google-chrome "google-chrome")
   (open-office "LibreOffice.org 3.2" "libreoffice")
   (evince "Evince" "evince")
   (dscope-hmi "Argv0dummy" "dscope-hmi"))
