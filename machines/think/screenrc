@@ -12,3 +12,24 @@ screen -t bash 0
 
 # http://serverfault.com/questions/126009/how-do-i-ask-screen-to-behave-like-a-standard-bash-shell
 defshell -bash
+
+# http://www.linuxquestions.org/questions/linux-general-1/screen-screenrc-how-to-use-the-right-ctrl-arrow-to-go-left-and-right-in-windows-764511/
+bindkey "^[[1;5D" prev  # change window with ctrl-left
+bindkey "^[[1;5C" next  # change window with ctrl-right
+
+# https://gist.github.com/enlavin/1023074 ...
+
+# https://github.com/majutsushi/etc/blob/master/screen/screenrc
+
+hardcopydir $HOME/.cache/screen
+logfile $HOME/.cache/screen/screenlog.%n
+
+bufferfile $HOME/.cache/screen/screen-exchange
+# bind w eval writebuf "exec !!! xclip -selection clipboard -i $HOME/.cache/screen/screen-exchange"
+bind y exec !!! xclip -selection clipboard -o
+
+# https://github.com/kokikoki/home/blob/master/.screenrc
+bindkey -m ' ' eval 'msgwait 0' 'stuff \040' writebuf 'exec !!! xclip -selection clipboard ${HOME}/.cache/screen/screen-exchange' 'msgwait 0'
+bindkey -m Y eval 'msgwait 0' 'stuff Y' writebuf 'exec !!! xclip -selection clipboard ${HOME}/.cache/screen/screen-exchange' 'msgwait 0'
+bindkey -m y eval 'msgwait 0' 'stuff y' writebuf 'exec !!! xclip -selection clipboard ${HOME}/.cache/screen/screen-exchange' 'msgwait 0'
+bindkey -m w eval 'msgwait 0' 'stuff W' writebuf 'exec !!! xclip -selection clipboard ${HOME}/.cache/screen/screen-exchange' 'msgwait 0'
