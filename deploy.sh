@@ -28,3 +28,8 @@ fi
 for filename in "$common_dir"/* "$machine_dir"/*; do
     linkfile "$filename"
 done
+
+mkdir -p ~/bin ~/.desk
+curl https://raw.githubusercontent.com/jamesob/desk/master/desk >"$HOME"/bin/desk
+chmod +x "$HOME"/bin/desk
+ln -s "$src_dir"/desks ~/.desk/desks

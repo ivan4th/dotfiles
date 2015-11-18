@@ -157,3 +157,13 @@ grep '^ *Host .*#CMD' ~/.ssh/config |
         echo "alias $h='settitle $h; ssh $h'"
     done >~/.ssh/aliases
 . ~/.ssh/aliases
+
+# Hook for desk activation
+[ -n "$DESK_ENV" ] && source "$DESK_ENV" || true
+
+if [ "$HOSTTYPE" = "arm" ]; then
+   cd ~/work/contactless
+   PS1="(wbch)$PS1"
+fi
+
+alias d='desk .'
