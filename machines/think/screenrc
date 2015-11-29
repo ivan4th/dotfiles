@@ -32,4 +32,4 @@ bind y exec !!! xclip -selection clipboard -o
 bindkey -m ' ' eval 'msgwait 0' 'stuff \040' writebuf 'exec !!! xclip -selection clipboard ${HOME}/.cache/screen/screen-exchange' 'msgwait 0'
 bindkey -m Y eval 'msgwait 0' 'stuff Y' writebuf 'exec !!! xclip -selection clipboard ${HOME}/.cache/screen/screen-exchange' 'msgwait 0'
 bindkey -m y eval 'msgwait 0' 'stuff y' writebuf 'exec !!! xclip -selection clipboard ${HOME}/.cache/screen/screen-exchange' 'msgwait 0'
-bindkey -m w eval 'msgwait 0' 'stuff W' writebuf 'exec !!! xclip -selection clipboard ${HOME}/.cache/screen/screen-exchange' 'msgwait 0'
+#bindkey -m w eval 'msgwait 0' 'stuff W' writebuf 'exec !!! xclip -selection clipboard ${HOME}/.cache/screen/screen-exchange' 'msgwait 0'
