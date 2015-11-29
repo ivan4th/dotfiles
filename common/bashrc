@@ -2,6 +2,8 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+bashrc_dir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
+
 # If running interactively, then:
 if [ "$PS1" ]; then
 
@@ -58,125 +60,6 @@ fi
 source /etc/profile
 source "$HOME/.myrc"
 
-alias ipy=ipython
-alias pry='FROGSTAR_PROFILE=prod ipython'
-export PATH="$PATH:$HOME/bin:$HOME/telescripts:$HOME/.npm-packages/bin"
-
-fufl () {
-    if [ -z "$1" ]; then
-        echo "must specify SWF to fuck"
-        exit 1
-    fi
-    mkdir -p ~/rmme
-    cp "$1" ~/rmme/aaa.swf
-    ~/bin/flare ~/rmme/aaa.swf
-    if ! tty >& /dev/null; then
-        cat ~/rmme/aaa.flr
-    else
-        less ~/rmme/aaa.flr
-    fi
-    rm ~/rmme/aaa.{swf,flr}
-}
-
-rmfasl () {
-    find . -regex '.*\(fasl\|lx[0-9]*fsl\)' -print0 | xargs -0e rm -f
-}
-
-# from http://tychoish.com/rhizome/9-awesome-ssh-tricks/
-sshreagent () {
-     for agent in /tmp/ssh-*/agent.*; do
-         export SSH_AUTH_SOCK=$agent
-         if ssh-add -l 2>&1 > /dev/null; then
-             echo Found working SSH Agent:
-             ssh-add -l
-             return
-         fi
-    done
-    echo Cannot find ssh agent - maybe you should reconnect and forward it?
-}
-
-umedia () {
-    grep /media/ /etc/mtab|cut -d' ' -f1|xargs umount
-}
-
-shu () {
-  ~/progs/sshuttle/sshuttle -v --dns -r w 192.168.1.0/24 192.168.1.100/24
-}
-
-pickl () {
-  if [ -z "$1" ]; then
-    echo "must specify lesson name" 1>&2
-    return 1
-  fi
-  if ! echo "$1" | grep -q ':'; then
-    name="lesson:$1"
-  else
-    name="$1"
-  fi
-  # rm anything after a slash
-  name="$(echo -n "$name"|sed 's@/.*@@')"
-  # TBD: specify course name
-  cmscli --pull ssh://os --pluck="$name" &&
-  cmscli -v --add-lessons-to=zarniwoop_test_course --exact-name="$name"
-}
-
-export GIT_PS1_SHOWDIRTYSTATE=1
-export GIT_PS1_SHOWUNTRACKEDFILES=1
-export PS1='\[\033[1;95m\]${debian_chroot:+($debian_chroot)}\u@\h\[\e[0m\]:\[\e[1;32m\]\w\[\033[0;33m\]$(__git_ps1 " (%s) ")\[\e[0m\]\$ '
-export PYTHONPATH="$HOME/work/cms"
-
-[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
-gvm use go1.5 >& /dev/null
-export GOPATH="$HOME/go:$GOPATH"
-export PATH="$PATH:$GOPATH/bin"
-
-# http://code-and-hacks.peculier.com/articles/setting-terminal-title-in-gnu-screen/
-function settitle () {
-    if [ "$TERM" != "screen" ]; then
-       return
-    fi
-    if [ -n "$STY" ] ; then
-        # We are in a screen session
-        # echo "Setting screen titles to $@"
-        printf "\033k%s\033\\" "$@"
-        # screen -X eval "at \\# title $@" "shelltitle $@"
-    else
-        printf "\033]0;%s\007" "$@"
-    fi
-}
-
-alias n='settitle b'
-
-# rebuild ssh config
-ussh () {
-    (echo "# GENERATED FILE!!!!! DO NOT EDIT!!!!!"; cat ~/.ssh/config.d/*) >~/.ssh/config
-}
-
-ussh
-
-grep '^ *Host .*#CMD' ~/.ssh/config |
-    sed 's/^Host *\| *#.*//g' |
-    while read h; do
-        echo "alias $h='settitle $h; ssh $h'"
-    done >~/.ssh/aliases
-. ~/.ssh/aliases
-
-# Hook for desk activation
-[ -n "$DESK_ENV" ] && source "$DESK_ENV" || true
-
-if [ "$HOSTTYPE" = "arm" ]; then
-   cd ~/work/contactless
-   PS1="(wbch)$PS1"
-fi
-
-alias d='desk .'
-
-# screen hardcopy / exchange dir
-mkdir -p ~/.cache/screen
-
-# serial consoles
-alias tu0='screen /dev/ttyUSB0 cs8,115200,ignbrk,-brkint,-icrnl,-imaxbel,-opost,-onlcr,-isig,-icanon,-iexten,-echo,-echoe,-echok,-echoctl,-echoke,noflsh,-ixon,-crtscts'
-alias tu1='screen /dev/ttyUSB1 cs8,115200,ignbrk,-brkint,-icrnl,-imaxbel,-opost,-onlcr,-isig,-icanon,-iexten,-echo,-echoe,-echok,-echoctl,-echoke,noflsh,-ixon,-crtscts'
-
-# emacsclient
-alias e="emacsclient -n"
+for f in "$bashrc_dir"/bash_*.sh; do
+    . "$f"
+done
