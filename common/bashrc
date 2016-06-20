@@ -35,6 +35,8 @@ if [ "$PS1" ]; then
     export HISTSIZE=1000000
     export HISTFILESIZE=1000000
     export HISTFILE="$HOME/.shell_history"
+    # https://www.reddit.com/r/linux/comments/4d9z0p/til_if_you_start_a_command_with_a_space_it_wont/
+    export HISTCONTROL=ignorespace
 
     # If this is an xterm set the title to user@host:dir
     case $TERM in
@@ -63,3 +65,4 @@ source "$HOME/.myrc"
 for f in "$bashrc_dir"/bash_*.sh; do
     . "$f"
 done
+
