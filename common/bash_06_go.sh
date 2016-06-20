@@ -1,5 +1,5 @@
-# [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
-# gvm use go1.5 >& /dev/null
+[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
+gvm use go1.6.1 >& /dev/null
 
-export GOPATH="$HOME/go:$GOPATH"
-export PATH="$PATH:$GOPATH/bin"
+export GOPATH="$HOME/wbdev/go:$GOPATH"
+export PATH="$PATH:$HOME/wbdev/go/bin"
