@@ -62,6 +62,8 @@ fi
 source /etc/profile
 source "$HOME/.myrc"
 
+[[ -s "/home/ivan4th/.gvm/scripts/gvm" ]] && source "/home/ivan4th/.gvm/scripts/gvm"
+
 for f in "$bashrc_dir"/bash_*.sh; do
     . "$f"
 done
