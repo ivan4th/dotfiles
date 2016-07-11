@@ -61,7 +61,10 @@
   (open-office "LibreOffice.org 3.2" "libreoffice")
   (evince "Evince" "evince")
   (dscope-hmi "Argv0dummy" "dscope-hmi")
-  (telegram "Telegram" "/opt/telegram/Telegram"))
+  (telegram "Telegram" "/opt/telegram/Telegram")
+  (slack "Slack" "slack")
+  #++
+  (scudcloud "Scudcloud" "scudcloud"))
 
 (defcommand sselect (to-screen) ((:number "Select Screen: "))
   "Select screen."
@@ -242,6 +245,9 @@
 
 (define-key *top-map* (kbd "s-d") "telegram")
 (define-key *k-map* (kbd "s-d") "p-telegram")
+
+(define-key *top-map* (kbd "s-,") "slack")
+(define-key *k-map* (kbd "s-,") "p-slack")
 
 (define-key *top-map* (kbd "s-g") "google")
 #+nil(define-key *top-map* (kbd "s-F4") "delete")
