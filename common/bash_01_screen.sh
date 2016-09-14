@@ -10,7 +10,10 @@ function settitle () {
     if [[ "$TERM" != screen* ]]; then
        return
     fi
-    if [ -n "$STY" ] ; then
+    if [ -n "$TMUX" ]; then
+        #printf "\033k%s\033\\" "$@"
+        printf "\033]2;%s\033\\" "$@"
+    elif [ -n "$STY" ]; then
         # We are in a screen session
         # echo "Setting screen titles to $@"
         printf "\033k%s\033\\" "$@"
