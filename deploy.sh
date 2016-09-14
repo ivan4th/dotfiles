@@ -19,9 +19,9 @@ linkfile () {
 }
 
 common_dir="$src_dir/common"
-machine_dir="$src_dir/machines/$(hostname)"
+machine_dir="$src_dir/machines/$(hostname -s)"
 if [ ! -d "$machine_dir" ]; then
-    echo "no definition for machine $(hostname)" 1>& 2
+    echo "no definition for machine $(hostname -s)" 1>& 2
     exit 1
 fi
 
@@ -29,7 +29,4 @@ for filename in "$common_dir"/* "$machine_dir"/*; do
     linkfile "$filename"
 done
 
-mkdir -p ~/bin ~/.desk
-curl https://raw.githubusercontent.com/jamesob/desk/master/desk >"$HOME"/bin/desk
-chmod +x "$HOME"/bin/desk
 ln -s "$src_dir"/desks ~/.desk/desks

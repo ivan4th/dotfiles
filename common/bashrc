@@ -2,6 +2,18 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+I4SYSTYPE=linux
+BASH_COMPLETION_FILE=/etc/bash_completion
+if [[ "$OSTYPE" == darwin* ]]; then
+   I4SYSTYPE=macosx
+   BASH_COMPLETION_FILE=/usr/local/etc/bash_completion
+fi
+
+if [[ "$I4SYSTYPE" == macosx ]]; then
+   export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+   export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+fi
+
 bashrc_dir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
 
 # If running interactively, then:
@@ -17,7 +29,9 @@ if [ "$PS1" ]; then
     shopt -s histappend
 
     # enable color support of ls and also add handy aliases
-    if [ "$TERM" != "dumb" ]; then
+    # make sure that dircolors is available before that, see
+    # http://stackoverflow.com/questions/592620/check-if-a-program-exists-from-a-bash-script
+    if [ "$TERM" != "dumb" -a hash dircolors >& /dev/null ]; then
 	eval `dircolors -b`
 	alias ls='ls --color=auto'
 	#alias dir='ls --color=auto --format=vertical'
@@ -54,8 +68,8 @@ if [ "$PS1" ]; then
 
     # enable programmable completion features (you don't need to enable
     # this, if it's already enabled in /etc/bash.bashrc).
-    if [ -f /etc/bash_completion ]; then
-      . /etc/bash_completion
+    if [ -f "$BASH_COMPLETION_FILE" ]; then
+      . "$BASH_COMPLETION_FILE"
     fi
 fi
 
@@ -68,3 +82,4 @@ for f in "$bashrc_dir"/bash_*.sh; do
     . "$f"
 done
 
+K8S_DEVBOX_HOMEDIR_INSTALL=true . '/Users/ivan4th/.k8s-devbox'/k8s-devenv.sh #added-by-k8s-devbox
