@@ -2,6 +2,9 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+# this solves "en_RU" unknoen locale problem on Mac OS X
+export LC_ALL=en_US.UTF-8
+
 I4SYSTYPE=linux
 BASH_COMPLETION_FILE=/etc/bash_completion
 if [[ "$OSTYPE" == darwin* ]]; then
@@ -10,11 +13,17 @@ if [[ "$OSTYPE" == darwin* ]]; then
 fi
 
 if [[ "$I4SYSTYPE" == macosx ]]; then
-   export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+   export PATH="/usr/local/sbin:/usr/local/opt/coreutils/libexec/gnubin:$PATH"
    export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 fi
 
-bashrc_dir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
+if [ $(uname) = Darwin ]; then
+  readlinkf(){ perl -MCwd -e 'print Cwd::abs_path shift' "$1";}
+else
+  readlinkf(){ readlink -f "$1"; }
+fi
+
+bashrc_dir="$(dirname "$(readlinkf "${BASH_SOURCE[0]}")")"
 
 # If running interactively, then:
 if [ "$PS1" ]; then
@@ -65,6 +74,9 @@ if [ "$PS1" ]; then
 	PROMPT_COMMAND='history -a'
         ;;
     esac
+    mkdir -p ~/.logs
+    # https://news.ycombinator.com/item?id=14103688
+    export PROMPT_COMMAND="${PROMPT_COMMAND};"'if [ "$(id -u)" -ne 0 ]; then echo "$(date "+%Y-%m-%d.%H:%M:%S") $(pwd) $(history 1)" >> ~/.logs/bash-history-$(date "+%Y-%m-%d").log; fi'
 
     # enable programmable completion features (you don't need to enable
     # this, if it's already enabled in /etc/bash.bashrc).
@@ -82,4 +94,10 @@ for f in "$bashrc_dir"/bash_*.sh; do
     . "$f"
 done
 
-K8S_DEVBOX_HOMEDIR_INSTALL=true . '/Users/ivan4th/.k8s-devbox'/k8s-devenv.sh #added-by-k8s-devbox
+# for C-s, via https://www.blockloop.io/mastering-bash-and-terminal
+stty -ixon
+
+# K8S_DEVBOX_HOMEDIR_INSTALL=true . '/Users/ivan4th/.k8s-devbox'/k8s-devenv.sh #added-by-k8s-devbox
+
+# added by travis gem
+[ -f /Users/ivan4th/.travis/travis.sh ] && source /Users/ivan4th/.travis/travis.sh

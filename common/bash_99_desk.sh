@@ -9,11 +9,15 @@ elif [ "$HOSTNAME" = "wbdevenv" ]; then
 fi
 
 d () {
-    if [ -z "$1" ]; then
+    if [[ ! ${1} ]]; then
         echo no desk specified 1>&2
         return 1
     fi
-    DESK_NAME="$1" DESK_ENV="$bashrc_dir/../desks/$1.sh" exec "$SHELL"
+    if [[ ${1} == list ]]; then
+      ( cd "${bashrc_dir}/../desks" && ls *.sh | sed 's/\.sh$//' )
+      return 0
+    fi
+    DESK_NAME="$1" DESK_ENV="${bashrc_dir}/../desks/${1}.sh" exec "$SHELL"
 }
 
 # based on https://github.com/jamesob/desk/blob/master/shell_plugins/bash/desk
@@ -24,7 +28,7 @@ _d() {
     cur=${COMP_WORDS[COMP_CWORD]}
 
     if [[ -d $DESKS ]]; then
-        local desks=$(desk list | cut -d' ' -f1)
+        local desks=$(d list)
     else
         local desks=""
     fi

@@ -1,4 +1,5 @@
 [user]
+#	email = ivan4th@gmail.com
 	email = ivan4th@gmail.com
 	name = Ivan Shvedunov
 [color]
@@ -11,5 +12,22 @@
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
 	latest = for-each-ref --sort=-committerdate --format='%(committerdate:short) %(refname:short) [%(committername)]'
 	graph = log --graph --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white) %an, %ar%Creset'
+        check-pr = "! f() { git fetch origin pull/$1/head:testing_pr_$1; git checkout testing_pr_$1; }; f"`
 #[push]
 #	default = simple
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	required = true
+	process = git-lfs filter-process
+[gitreview]
+	username = ishvedunov
+[merge]
+	tool = p4merge
+[mergetool]
+	prompt = false
+	keepBackup = false
+[mergetool "p4merge"]
+	path = /usr/local/bin/p4merge
+[url "git@gitlab.tpip.net:"]
+        insteadOf = https://gitlab.tpip.net/

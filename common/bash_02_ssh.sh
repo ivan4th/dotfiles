@@ -24,3 +24,5 @@ sshreagent () {
     done
     echo Cannot find ssh agent - maybe you should reconnect and forward it?
 }
+
+alias unssh="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
