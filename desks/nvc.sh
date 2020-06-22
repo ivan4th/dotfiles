@@ -1,2 +1,3 @@
+settitle nvc
 cd ~/work/newvas/newcluster
-. scripts/env
+. scripts/env.sh
