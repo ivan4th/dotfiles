@@ -45,3 +45,12 @@ rmfasl () {
 umedia () {
     grep /media/ /etc/mtab|cut -d' ' -f1|xargs umount
 }
+
+hist () {
+  local n="${1:-10}"
+  local p=$((-n))
+  history "${n}" | sed 's/^[0-9]* *//' | while read item; do
+    echo "${p}  ${item}"
+    ((p++))
+  done
+}
