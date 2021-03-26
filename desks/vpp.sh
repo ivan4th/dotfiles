@@ -3,7 +3,7 @@ settitle vpp
 cd ~/work/travelping/vpp
 
 function build_image_name {
-  local build_hash="$(git ls-tree HEAD -- Makefile build/external extras/docker/Dockerfile.build | md5sum | awk '{print $1}')"
+  local build_hash="$(git ls-files -s HEAD -- Makefile build/external extras/docker/Dockerfile.build | md5sum | awk '{print $1}')"
   echo "quay.io/travelping/upf-build:${build_hash}"
 }
 

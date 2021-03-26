@@ -37,3 +37,6 @@
 
 [interactive]
     diffFilter = delta --color-only
+
+[includeIf "gitdir:~/work/travelping/"]
+	path = .gitconfig_travelping

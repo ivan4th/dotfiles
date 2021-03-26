@@ -20,3 +20,11 @@ function dsm {
 function dsn {
   ds kube-node-${1:-1}
 }
+
+function dsocat {
+  local host="$1"
+  local port="$2"
+  local rport="${3:-2375}"
+  ssh -L "${port}:localhost:${rport}" "${host}" \
+      "pkill socat; socat TCP-LISTEN:${rport},reuseaddr,fork,bind=127.0.0.1 UNIX:/var/run/docker.sock"
+}
